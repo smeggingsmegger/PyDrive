@@ -53,6 +53,17 @@ class GoogleAuthTest(unittest.TestCase):
         self.CheckCredentialsFile('credentials/1.dat')
         time.sleep(1)
 
+    def test_05_ServiceAuthWithClientConfigFromSettings(self):
+        # Delete old credentials file
+        self.DeleteOldCredentialsFile('credentials/5.dat')
+        # Test if authentication works with config read from settings
+        ga = GoogleAuth('settings/test5.yaml')
+        ga.ServiceAuth()
+        self.assertEqual(ga.access_token_expired, False)
+        # Test if correct credentials file is created
+        self.CheckCredentialsFile('credentials/5.dat')
+        time.sleep(1)
+
     def DeleteOldCredentialsFile(self, credentials):
         try:
             os.remove(credentials)
